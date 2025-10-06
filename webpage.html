@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- jQuery + Turn.js 3 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
+
+  <style>
+    body {
+      background: #eee;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    /* Book container (2 pages side-by-side) */
+    #book {
+      width: 1190px;  /* 2 x 595 */
+      height: 842px;
+      margin: 40px auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    /* Each page */
+    .page {
+      position: relative;
+      width: 595px;
+      height: 842px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* Iframe displays the full spread but we clip it */
+    .page > iframe {
+      width: 1190px;
+      height: 842px;
+      border: 0;
+      display: block;
+      transform: translateX(0);
+      pointer-events: none; /* ✅ allow flip interactions */
+    }
+
+    .page.right > iframe {
+      transform: translateX(-595px); /* ✅ shift to show right side */
+    }
+
+    /* Optional navigation buttons */
+    #controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+    #controls button {
+      font-size: 20px;
+      padding: 10px 30px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="book">
+
+    <!-- publication.html -->
+    <div class="page left"><iframe src="publication.html"></iframe></div>
+
+    <!-- publication-1.html -->
+    <div class="page left"><iframe src="publication-1.html"></iframe></div>
+    <div class="page right"><iframe src="publication-1.html"></iframe></div>
+
+    <!-- publication-2.html -->
+    <div class="page left"><iframe src="publication-2.html"></iframe></div>
+    <div class="page right"><iframe src="publication-2.html"></iframe></div>
+
+    <!-- publication-3.html -->
+    <div class="page left"><iframe src="publication-3.html"></iframe></div>
+    <div class="page right"><iframe src="publication-3.html"></iframe></div>
+
+    <!-- publication-4.html -->
+    <div class="page left"><iframe src="publication-4.html"></iframe></div>
+    <div class="page right"><iframe src="publication-4.html"></iframe></div>
+
+    <!-- publication-5.html -->
+    <div class="page left"><iframe src="publication-5.html"></iframe></div>
+    <div class="page right"><iframe src="publication-5.html"></iframe></div>
+
+    <!-- publication-6.html -->
+    <div class="page left"><iframe src="publication-6.html"></iframe></div>
+    <div class="page right"><iframe src="publication-6.html"></iframe></div>
+
+    <!-- publication-7.html -->
+    <div class="page left"><iframe src="publication-7.html"></iframe></div>
+    <div class="page right"><iframe src="publication-7.html"></iframe></div>
+
+    <!-- publication-8.html -->
+    <div class="page left"><iframe src="publication-8.html"></iframe></div>
+    <div class="page right"><iframe src="publication-8.html"></iframe></div>
+
+    <!-- publication-9.html -->
+    <div class="page left"><iframe src="publication-9.html"></iframe></div>
+    <div class="page right"><iframe src="publication-9.html"></iframe></div>
+
+    <!-- publication-10.html -->
+    <div class="page left"><iframe src="publication-10.html"></iframe></div>
+
+  </div>
+
+  <div id="controls">
+    <button id="prev">‹ Previous</button>
+    <button id="next">Next ›</button>
+  </div>
+
+  <script>
+    $(function () {
+      const $book = $('#book').turn({
+        width: 1190,
+        height: 842,
+        display: 'double',
+        autoCenter: true,
+        gradients: true,
+        elevation: 50
+      });
+
+      // ✅ Click navigation
+      $('#book').on('click', '.page.left',  () => $book.turn('previous'));
+      $('#book').on('click', '.page.right', () => $book.turn('next'));
+
+      // ✅ Keyboard navigation
+      $(document).on('keydown', (e) => {
+        if (e.key === 'ArrowLeft')  $book.turn('previous');
+        if (e.key === 'ArrowRight') $book.turn('next');
+      });
+
+      // ✅ Buttons
+      $('#prev').on('click', () => $book.turn('previous'));
+      $('#next').on('click', () => $book.turn('next'));
+    });
+  </script>
+
+</body>
+</html>
